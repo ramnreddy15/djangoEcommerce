@@ -2,4 +2,13 @@
 
 The learn django task.
 
-For the site to work make sure to create the products in the django admin.
+# Directions for making the program work
+
+## ```cd ecommerce```
+## ```python manage.py makemigrations```
+## ```python manage.py migrate```
+## Optional step: ```python manage.py test```
+## ```python manage.py createsuperuser``` Add your own credentials
+## ```python manage.py runserver```
+## Add some product models in django admin in ```http://127.0.0.1:8000/admin/cheapStore/product/```
+# ENJOY!
