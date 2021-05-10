@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load customTags %}
+{% block content %}
+
+<h1>Checkout page</h1> 
+
+{% if empty == 1 %}
+    <h2>Continue shopping! You have an empty cart.</h2>
+{% else %}
+<table style="width:100%">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price for quantity</th>
+      </tr>
+    {% for product in wantedProducts %}
+        <tr style="text-align:center">
+            <td style="border-style: solid">{{ product }}</td>
+            <td style="border-style: solid">{{ quantities|get_item:product }}</td>
+            <td style="border-style: solid">{{ prices|get_item:product }}</td>
+        </tr>
+    {% endfor %}
+    <tr style="text-align:center">
+        <td></td>
+        <td style="border-style: solid">Subtotal</td>
+        <td style="border-style: solid">{{ subtotal }}</td>
+    </tr>
+    <tr style="text-align:center">
+        <td></td>
+        <td style="border-style: solid">Taxed %6</td>
+        <td style="border-style: solid">{{ taxed }}</td>
+    </tr>
+    <tr style="text-align:center">
+        <td></td>
+        <td style="border-style: solid">Total</td>
+        <td style="border-style: solid">{{ total }}</td>
+    </tr>
+</table>
+<button>Click to buy.</button>
+{% endif %}    
+<group id="group">
+<h2>Congradulations you have bought many things! Go to django admin to see your reciept.</h2>
+
+<h2>Here is a preview of your reciept.</h2>
+
+<table id="table" style="width:100%">
+    <tr style="text-align:center">
+        <td id="user" style="border-style: solid">User</td>
+        <td id="userValue" style="border-style: solid">{{request.user}}</td>
+    </tr>
+    <tr style="text-align:center">
+        <td id="total" style="border-style: solid">Total cost</td>
+        <td id="totalValue" style="border-style: solid">{{total}} dollornes</td>
+    </tr>
+    <tr style="text-align:center">
+        <td id="products" style="border-style: solid">Products bought</td>
+        <td id="productsValues" style="border-style: solid">{{quantities}}</td>
+    </tr>
+</table>
+
+
+<h2>Click 'Click to buy' to buy the products again.</h2>
+</group>
+<script type="text/javascript">       
+    document.getElementById("group").hidden = true; 
+    $("button").click(function() {
+        var fired_button = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '/checkout/',
+            data: {
+                'user': '{{request.user}}',
+                'cost': '{{total}}',
+                'products': '{{quantities}}',
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            dataType: "json",
+        });
+
+        document.getElementById("group").hidden = false;
+    });
+</script>
+
+{% endblock %}

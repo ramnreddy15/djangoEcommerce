@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load customTags %}
+
+{% block content %}
+<h1>Cart page</h1>
+
+{% if empty == 1 %}
+
+    <h2>Continue shopping! You have an empty cart.</h2>
+
+{% else %}
+<table style="width:100%">
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+      </tr>
+    {% for product in wantedProducts %}
+        <tr style="text-align:center">
+            <td style="border-style: solid">{{ product }}</td>
+            <td style="border-style: solid">{{ quantities|get_item:product }}</td>
+        </tr>
+    {% endfor %}
+</table>
+
+<button>Click me to clear your cart.</button>
+
+{% endif %}
+
+<script type="text/javascript">        
+    $("button").click(function() {
+        $.ajax({
+            type: "POST",
+            url: '/cart/',
+            data: {
+                "clearCart": "Clear",
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            dataType: "json",
+        });
+
+        setTimeout(function () {
+            window.location.href = window.location.href;
+        }, 100);
+    });
+</script>
+{% endblock %}

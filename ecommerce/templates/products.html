@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Products page</h1>
+
+<table style="width:100%">
+    <tr>
+        <th>Name</th>
+        <th>Description</th> 
+        <th>Price</th>
+        <th>Buy</th>
+      </tr>
+    {% for product in allObjects %}
+        <tr style="text-align:center">
+            <td style="border-style: solid">{{ product.name }}</td>
+            <td style="border-style: solid">{{ product.description }}</td>
+            <td style="border-style: solid">{{ product.price }}</td>
+            <td style="border-style: solid"><button name={{ product.name }} value={{ product.name }}>Add to cart!</button></td> 
+        </tr>
+    {% endfor %}
+</table>
+
+<p id="bought"></p>
+
+<script type="text/javascript">        
+    $("button").click(function() {
+        var fired_button = $(this).val();
+        $.ajax({
+            type: "POST",
+            url: '/products/',
+            data: {
+                "addToCart": fired_button,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            dataType: "json",
+        });
+        document.getElementById("bought").innerHTML = "You have bought 1 " + fired_button;
+    });
+</script>
+
+{% endblock %}
