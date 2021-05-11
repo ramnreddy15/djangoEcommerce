@@ -14,7 +14,7 @@
         <tr style="text-align:center">
             <td style="border-style: solid">{{ product.name }}</td>
             <td style="border-style: solid">{{ product.description }}</td>
-            <td style="border-style: solid">{{ product.price }}</td>
+            <td style="border-style: solid">${{ product.price }}</td>
             <td style="border-style: solid"><button name={{ product.name }} value={{ product.name }}>Add to cart!</button></td> 
         </tr>
     {% endfor %}

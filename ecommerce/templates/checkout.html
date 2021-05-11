@@ -17,23 +17,23 @@
         <tr style="text-align:center">
             <td style="border-style: solid">{{ product }}</td>
             <td style="border-style: solid">{{ quantities|get_item:product }}</td>
-            <td style="border-style: solid">{{ prices|get_item:product }}</td>
+            <td style="border-style: solid">${{ prices|get_item:product }}</td>
         </tr>
     {% endfor %}
     <tr style="text-align:center">
         <td></td>
         <td style="border-style: solid">Subtotal</td>
-        <td style="border-style: solid">{{ subtotal }}</td>
+        <td style="border-style: solid">${{ subtotal }}</td>
     </tr>
     <tr style="text-align:center">
         <td></td>
         <td style="border-style: solid">Taxed %6</td>
-        <td style="border-style: solid">{{ taxed }}</td>
+        <td style="border-style: solid">${{ taxed }}</td>
     </tr>
     <tr style="text-align:center">
         <td></td>
         <td style="border-style: solid">Total</td>
-        <td style="border-style: solid">{{ total }}</td>
+        <td style="border-style: solid">${{ total }}</td>
     </tr>
 </table>
 <button>Click to buy.</button>
@@ -50,7 +50,7 @@
     </tr>
     <tr style="text-align:center">
         <td id="total" style="border-style: solid">Total cost</td>
-        <td id="totalValue" style="border-style: solid">{{total}} dollornes</td>
+        <td id="totalValue" style="border-style: solid">${{total}}</td>
     </tr>
     <tr style="text-align:center">
         <td id="products" style="border-style: solid">Products bought</td>
@@ -71,7 +71,7 @@
             data: {
                 'user': '{{request.user}}',
                 'cost': '{{total}}',
-                'products': '{{quantities}}',
+                'products': '{{list}}',
                 'csrfmiddlewaretoken': '{{ csrf_token }}',
             },
             dataType: "json",

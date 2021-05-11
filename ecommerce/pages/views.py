@@ -76,10 +76,10 @@ def checkout(request):
         form = ReceiptForm(request.POST)
         if form.is_valid(): # Creates the reciept
             form.save()
-            for product in request.session['products']:
+            for product in request.session['products']: # Empty the current cart
                 request.session.pop(product)
-            request.session['products'] = []
-
+            request.session['products'] = []        
+           
     if len(request.session['products']) != 0: # Basic checks on how to preview the page
         productDict = {} # Adding neccary data like quantities and prices etc...
         for product in request.session['products']: # For some reason dictionaries will not work ;(
@@ -95,7 +95,15 @@ def checkout(request):
         context['prices'] = prices # Dictionary for prices of products 
         context['subtotal'] = subtotal
         context['taxed'] = taxed
-        context['total'] = total
+        context['total'] = total            
+    
+        temp = "" # Create the list for the receipt
+    
+        for key in productDict.keys():
+            temp+= str(key) + ": " + str(productDict.get(key)) + "    ||||||     "
+    
+        context['list'] = temp
+
     else:
         context["empty"] = 1
 

@@ -4,6 +4,7 @@ The learn django task.
 
 # Directions for making the program work
 
+## Make the virtual enviornement and stuff and install the stuff from requirements.txt
 ## ```cd ecommerce```
 ## ```python manage.py makemigrations```
 ## ```python manage.py migrate```
